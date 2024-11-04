@@ -3,9 +3,10 @@ package dto
 type ProductRequest struct {
 	ID           string `json:"id"`
 	UserID       string `json:"user_id"`
+	MerchanID    string `json:"merchant_id"`
 	ProductName  string `json:"product_name"`
-	Stock        string `json:"stock"`
-	MinimalStock string `json:"minimal_stock"`
+	Stock        int    `json:"stock"`
+	MinimalStock int    `json:"minimal_stock"`
 	Price        string `json:"price"`
 	CreatedBy    string `json:"created_by"`
 }
@@ -14,8 +15,8 @@ type ProductResponse struct {
 	ID           string `json:"id"`
 	UserID       string `json:"user_id"`
 	ProductName  string `json:"product_name"`
-	Stock        string `json:"stock"`
-	MinimalStock string `json:"minimal_stock"`
+	Stock        int    `json:"stock"`
+	MinimalStock int    `json:"minimal_stock"`
 	Price        string `json:"price"`
 	CreatedBy    string `json:"created_by"`
 }
@@ -47,8 +48,8 @@ type BulkDeleteResponse struct {
 type ProductUpdateRequest struct {
 	ID           string `json:"id"`
 	ProductName  string `json:"product_name"`
-	Stock        string `json:"stock"`
-	MinimalStock string `json:"minimal_stock"`
+	Stock        int    `json:"stock"`
+	MinimalStock int    `json:"minimal_stock"`
 	Price        string `json:"price"`
 	UpdatedBy    string `json:"updated_by"`
 }
@@ -56,8 +57,8 @@ type ProductUpdateRequest struct {
 type ProductUpdateResponse struct {
 	ID           string `json:"id"`
 	ProductName  string `json:"product_name"`
-	Stock        string `json:"stock"`
-	MinimalStock string `json:"minimal_stock"`
+	Stock        int    `json:"stock"`
+	MinimalStock int    `json:"minimal_stock"`
 	Price        string `json:"price"`
 	UpdatedBy    string `json:"updated_by"`
 }

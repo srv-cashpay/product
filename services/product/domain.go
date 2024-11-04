@@ -1,16 +1,16 @@
 package product
 
 import (
+	"github.com/labstack/echo/v4"
 	m "github.com/srv-cashpay/middlewares/middlewares"
 	dto "github.com/srv-cashpay/product/dto"
-	entity "github.com/srv-cashpay/product/entity"
 
 	r "github.com/srv-cashpay/product/repositories/product"
 )
 
 type ProductService interface {
 	Create(req dto.ProductRequest) (dto.ProductResponse, error)
-	Get() ([]entity.Product, error)
+	Get(context echo.Context, req *dto.Pagination) dto.Response
 	GetById(req dto.GetByIdRequest) (*dto.ProductResponse, error)
 	Delete(req dto.DeleteRequest) (dto.DeleteResponse, error)
 	BulkDelete(req dto.BulkDeleteRequest) (dto.BulkDeleteResponse, error)

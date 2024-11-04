@@ -19,6 +19,7 @@ func (b *domainHandler) Update(c echo.Context) error {
 	if err != nil {
 		return res.ErrorBuilder(&res.ErrorConstant.BadRequest, err).Send(c)
 	}
+
 	req.ID = idUint
 	req.UpdatedBy = updatedBy
 

@@ -14,6 +14,7 @@ func (h *domainHandler) Create(c echo.Context) error {
 	if !ok {
 		return res.ErrorBuilder(&res.ErrorConstant.InternalServerError, nil).Send(c)
 	}
+
 	createdBy, ok := c.Get("CreatedBy").(string)
 	if !ok {
 		return res.ErrorBuilder(&res.ErrorConstant.InternalServerError, nil).Send(c)

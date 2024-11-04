@@ -10,27 +10,29 @@ import (
 )
 
 var (
-	DB  = configs.InitDB()
-	JWT = middlewares.NewJWTService()
-
+	DB       = configs.InitDB()
+	JWT      = middlewares.NewJWTService()
 	productR = r_product.NewProductRepository(DB)
 	productS = s_product.NewProductService(productR, JWT)
 	productH = h_product.NewProductHandler(productS)
 )
 
 func New() *echo.Echo {
-
 	e := echo.New()
 
-	product := e.Group("api/product", middlewares.AuthorizeJWT(JWT))
+	product := e.Group("/api/product", middlewares.AuthorizeJWT(JWT))
 	{
 		product.POST("/create", productH.Create)
-		product.GET("/get", productH.Get)
 		product.GET("/:id", productH.GetById)
 		product.DELETE("/:id", productH.Delete)
 		product.DELETE("/bulk-delete", productH.BulkDelete)
 		product.PUT("/update/:id", productH.Update)
+		product.PUT("/update/:id", productH.Update)
+		product.GET("/pagination", productH.Get)
+
+		// Add pagination route within product group
 
 	}
+
 	return e
 }
