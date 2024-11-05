@@ -13,7 +13,7 @@ type Product struct {
 	ProductName  string         `gorm:"product_name,omitempty" json:"product_name"`
 	Stock        int            `gorm:"stock,omitempty" json:"stock"`
 	MinimalStock int            `gorm:"minimal_stock,omitempty" json:"minimal_stock"`
-	Price        string         `gorm:"price,omitempty" json:"price"`
+	Price        int            `gorm:"price,omitempty" json:"price"`
 	Description  string         `gorm:"description,omitempty" json:"description"`
 	CreatedBy    string         `gorm:"created_by" json:"created_by"`
 	UpdatedBy    string         `gorm:"updated_by" json:"updated_by"`
