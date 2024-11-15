@@ -5,7 +5,7 @@ import (
 	"github.com/srv-cashpay/product/entity"
 )
 
-func (r *productRepository) Create(req dto.ProductRequest) (dto.ProductRequest, error) {
+func (r *productRepository) Create(req dto.ProductRequest) (dto.ProductResponse, error) {
 
 	create := entity.Product{
 		ID:           req.ID,
@@ -13,21 +13,25 @@ func (r *productRepository) Create(req dto.ProductRequest) (dto.ProductRequest, 
 		Stock:        req.Stock,
 		MinimalStock: req.MinimalStock,
 		Price:        req.Price,
+		Status:       req.Status,
 		UserID:       req.UserID,
 		CreatedBy:    req.CreatedBy,
+		Description:  req.Description,
 	}
 
 	if err := r.DB.Save(&create).Error; err != nil {
-		return dto.ProductRequest{}, err
+		return dto.ProductResponse{}, err
 	}
 
-	response := dto.ProductRequest{
+	response := dto.ProductResponse{
 		ID:           req.ID,
 		UserID:       req.UserID,
 		ProductName:  create.ProductName,
+		Description:  create.Description,
 		Stock:        create.Stock,
 		MinimalStock: create.MinimalStock,
 		Price:        create.Price,
+		Status:       create.Status,
 		CreatedBy:    req.CreatedBy,
 	}
 

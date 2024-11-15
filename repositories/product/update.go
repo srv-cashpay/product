@@ -1,47 +1,52 @@
 package product
 
 import (
-	dto "github.com/srv-cashpay/product/dto"
+	"log"
+
+	"github.com/srv-cashpay/product/dto"
 	"github.com/srv-cashpay/product/entity"
 )
 
 func (b *productRepository) Update(req dto.ProductUpdateRequest) (dto.ProductUpdateResponse, error) {
-	tr := dto.GetByIdRequest{
-		ID: req.ID,
-	}
-
-	request := entity.Product{
+	// Menyiapkan struktur update untuk produk
+	updateProduct := entity.Product{
 		ProductName:  req.ProductName,
 		Stock:        req.Stock,
 		MinimalStock: req.MinimalStock,
 		Price:        req.Price,
+		Status:       req.Status, // Pastikan status boolean diterima dengan benar
 		UpdatedBy:    req.UpdatedBy,
+		UserID:       req.UserID,
+		Description:  req.Description,
 	}
 
-	product, err := b.GetById(tr)
+	// Cek apakah produk ada terlebih dahulu
+	var existingProduct entity.Product
+	err := b.DB.Where("user_id = ?", req.UserID).First(&existingProduct).Error
 	if err != nil {
 		return dto.ProductUpdateResponse{}, err
 	}
 
-	err = b.DB.Where("ID = ?", req.ID).Updates(entity.Product{
-		ProductName:  request.ProductName,
-		Stock:        request.Stock,
-		MinimalStock: request.MinimalStock,
-		Price:        request.Price,
-		UpdatedBy:    request.UpdatedBy,
-	}).Error
+	// Update produk dengan nilai yang baru
+	err = b.DB.Model(&existingProduct).Updates(updateProduct).Error
 	if err != nil {
 		return dto.ProductUpdateResponse{}, err
 	}
 
+	// Menyiapkan response setelah pembaruan berhasil
 	response := dto.ProductUpdateResponse{
-		ProductName:  request.ProductName,
-		Stock:        request.Stock,
-		MinimalStock: request.MinimalStock,
-		Price:        request.Price,
-		ID:           product.ID,
-		UpdatedBy:    request.UpdatedBy,
+		ProductName:  updateProduct.ProductName,
+		Stock:        updateProduct.Stock,
+		MinimalStock: updateProduct.MinimalStock,
+		Price:        updateProduct.Price,
+		Status:       updateProduct.Status,
+		UpdatedBy:    updateProduct.UpdatedBy,
+		UserID:       updateProduct.UserID,
+		Description:  updateProduct.Description,
 	}
+
+	// Log status yang diupdate
+	log.Printf("Updated status: %v", updateProduct.Status)
 
 	return response, nil
 }

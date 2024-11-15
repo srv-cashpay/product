@@ -9,9 +9,11 @@ func (s *productService) Create(req dto.ProductRequest) (dto.ProductResponse, er
 	create := dto.ProductRequest{
 		ID:           util.GenerateRandomString(),
 		ProductName:  req.ProductName,
+		Description:  req.Description,
 		Stock:        req.Stock,
 		MinimalStock: req.MinimalStock,
 		Price:        req.Price,
+		Status:       req.Status,
 		UserID:       req.UserID,
 		CreatedBy:    req.CreatedBy,
 	}
@@ -25,9 +27,11 @@ func (s *productService) Create(req dto.ProductRequest) (dto.ProductResponse, er
 		ID:           created.ID,
 		UserID:       created.UserID,
 		ProductName:  created.ProductName,
+		Description:  created.Description,
 		Stock:        created.Stock,
 		MinimalStock: created.MinimalStock,
 		Price:        created.Price,
+		Status:       created.Status,
 		CreatedBy:    created.CreatedBy,
 	}
 

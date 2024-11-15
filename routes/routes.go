@@ -27,7 +27,6 @@ func New() *echo.Echo {
 		product.DELETE("/:id", productH.Delete)
 		product.DELETE("/bulk-delete", productH.BulkDelete)
 		product.PUT("/update/:id", productH.Update)
-		product.PUT("/update/:id", productH.Update)
 		product.GET("/pagination", productH.Get)
 
 		// Add pagination route within product group

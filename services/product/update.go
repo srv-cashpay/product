@@ -8,7 +8,10 @@ func (b *productService) Update(req dto.ProductUpdateRequest) (dto.ProductUpdate
 		Stock:        req.Stock,
 		MinimalStock: req.MinimalStock,
 		Price:        req.Price,
+		Status:       req.Status,
 		UpdatedBy:    req.UpdatedBy,
+		UserID:       req.UserID,
+		Description:  req.Description,
 	}
 
 	product, err := b.Repo.Update(req)
@@ -21,7 +24,10 @@ func (b *productService) Update(req dto.ProductUpdateRequest) (dto.ProductUpdate
 		Stock:        request.Stock,
 		MinimalStock: request.MinimalStock,
 		Price:        request.Price,
+		Status:       request.Status,
 		UpdatedBy:    request.UpdatedBy,
+		UserID:       request.UserID,
+		Description:  request.Description,
 	}
 
 	return response, nil

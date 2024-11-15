@@ -45,3 +45,10 @@ func GeneratePaginationRequest(context echo.Context) *dto.Pagination {
 
 	return &dto.Pagination{Limit: limit, Page: page, Sort: sort, Searchs: searchs}
 }
+
+func TruncateString(input string, length int) string {
+	if len(input) > length {
+		return input[:length] + "..."
+	}
+	return input
+}

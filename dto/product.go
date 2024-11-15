@@ -3,21 +3,26 @@ package dto
 type ProductRequest struct {
 	ID           string `json:"id"`
 	UserID       string `json:"user_id"`
-	MerchanID    string `json:"merchant_id"`
+	MerchantID   string `json:"merchant_id"`
 	ProductName  string `json:"product_name"`
+	Description  string `json:"description"`
 	Stock        int    `json:"stock"`
 	MinimalStock int    `json:"minimal_stock"`
 	Price        int    `json:"price"`
+	Status       bool   `json:"status"`
 	CreatedBy    string `json:"created_by"`
 }
 
 type ProductResponse struct {
 	ID           string `json:"id"`
 	UserID       string `json:"user_id"`
+	MerchantID   string `json:"merchant_id"`
 	ProductName  string `json:"product_name"`
+	Description  string `json:"description"`
 	Stock        int    `json:"stock"`
 	MinimalStock int    `json:"minimal_stock"`
 	Price        int    `json:"price"`
+	Status       bool   `json:"status"`
 	CreatedBy    string `json:"created_by"`
 }
 
@@ -51,7 +56,11 @@ type ProductUpdateRequest struct {
 	Stock        int    `json:"stock"`
 	MinimalStock int    `json:"minimal_stock"`
 	Price        int    `json:"price"`
+	Status       bool   `json:"status"`
 	UpdatedBy    string `json:"updated_by"`
+	UserID       string `json:"user_id"`
+	MerchantID   string `json:"merchant_id"`
+	Description  string `json:"description"`
 }
 
 type ProductUpdateResponse struct {
@@ -60,5 +69,9 @@ type ProductUpdateResponse struct {
 	Stock        int    `json:"stock"`
 	MinimalStock int    `json:"minimal_stock"`
 	Price        int    `json:"price"`
+	Status       bool   `json:"status"`
 	UpdatedBy    string `json:"updated_by"`
+	UserID       string `json:"user_id"`
+	MerchantID   string `json:"merchant_id"`
+	Description  string `json:"description"`
 }

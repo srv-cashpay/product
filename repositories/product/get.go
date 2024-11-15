@@ -7,6 +7,7 @@ import (
 
 	dto "github.com/srv-cashpay/product/dto"
 	"github.com/srv-cashpay/product/entity"
+	"github.com/srv-cashpay/product/helpers"
 )
 
 func (r *productRepository) Get(req *dto.Pagination) (RepositoryResult, int) {
@@ -51,6 +52,10 @@ func (r *productRepository) Get(req *dto.Pagination) (RepositoryResult, int) {
 	// Hitung total data
 	if errCount := r.DB.Model(&entity.Product{}).Where("user_id = ?", req.UserID).Count(&totalRows).Error; errCount != nil {
 		return RepositoryResult{Error: errCount}, totalPages
+	}
+
+	for i := range products {
+		products[i].ProductName = helpers.TruncateString(products[i].ProductName, 47)
 	}
 
 	req.TotalRows = int(totalRows)
