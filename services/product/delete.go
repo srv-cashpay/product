@@ -16,6 +16,7 @@ func (b *productService) Delete(req dto.DeleteRequest) (dto.DeleteResponse, erro
 	}
 
 	response := dto.DeleteResponse{
+		ID:        transactionBody.ID,
 		DeletedBy: transactionBody.DeletedBy,
 	}
 

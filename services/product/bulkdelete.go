@@ -16,6 +16,7 @@ func (b *productService) BulkDelete(req dto.BulkDeleteRequest) (dto.BulkDeleteRe
 	}
 
 	response := dto.BulkDeleteResponse{
+		ID:        transactionBody.ID,
 		DeletedBy: transactionBody.DeletedBy,
 		Count:     count, // Menyimpan jumlah yang dihapus
 	}

@@ -46,8 +46,9 @@ type BulkDeleteRequest struct {
 }
 
 type BulkDeleteResponse struct {
-	DeletedBy string `json:"deleted_by"`
-	Count     int    `json:"count"`
+	ID        []string `json:"id"`
+	DeletedBy string   `json:"deleted_by"`
+	Count     int      `json:"count"`
 }
 
 type ProductUpdateRequest struct {

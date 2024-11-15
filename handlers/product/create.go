@@ -20,7 +20,13 @@ func (h *domainHandler) Create(c echo.Context) error {
 		return res.ErrorBuilder(&res.ErrorConstant.InternalServerError, nil).Send(c)
 	}
 
+	merchantId, ok := c.Get("MerchantId").(string)
+	if !ok {
+		return res.ErrorBuilder(&res.ErrorConstant.InternalServerError, nil).Send(c)
+	}
+
 	req.UserID = userid
+	req.MerchantID = merchantId
 	req.CreatedBy = createdBy
 
 	err := c.Bind(&req)

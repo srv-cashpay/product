@@ -13,6 +13,7 @@ func (b *domainHandler) Get(c echo.Context) error {
 	if !ok {
 		return res.ErrorBuilder(&res.ErrorConstant.InternalServerError, nil).Send(c)
 	}
+
 	paginationDTO.UserID = userid
 
 	if err := c.Bind(&paginationDTO); err != nil {
