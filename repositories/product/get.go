@@ -20,7 +20,7 @@ func (r *productRepository) Get(req *dto.Pagination) (RepositoryResult, int) {
 	offset := (req.Page - 1) * req.Limit
 
 	// Ambil data sesuai limit, offset, dan urutan
-	find := r.DB.Where("user_id = ?", req.UserID).Limit(req.Limit).Offset(offset).Order(req.Sort)
+	find := r.DB.Where("merchant_id = ?", req.MerchantID).Limit(req.Limit).Offset(offset).Order(req.Sort)
 
 	// Generate where query untuk search
 	if req.Searchs != nil {
@@ -50,7 +50,7 @@ func (r *productRepository) Get(req *dto.Pagination) (RepositoryResult, int) {
 	req.Rows = products
 
 	// Hitung total data
-	if errCount := r.DB.Model(&entity.Product{}).Where("user_id = ?", req.UserID).Count(&totalRows).Error; errCount != nil {
+	if errCount := r.DB.Model(&entity.Product{}).Where("merchant_id = ?", req.MerchantID).Count(&totalRows).Error; errCount != nil {
 		return RepositoryResult{Error: errCount}, totalPages
 	}
 

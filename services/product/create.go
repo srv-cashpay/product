@@ -15,6 +15,7 @@ func (s *productService) Create(req dto.ProductRequest) (dto.ProductResponse, er
 		Price:        req.Price,
 		Status:       req.Status,
 		UserID:       req.UserID,
+		MerchantID:   req.MerchantID,
 		CreatedBy:    req.CreatedBy,
 	}
 
@@ -32,6 +33,7 @@ func (s *productService) Create(req dto.ProductRequest) (dto.ProductResponse, er
 		MinimalStock: created.MinimalStock,
 		Price:        created.Price,
 		Status:       created.Status,
+		MerchantID:   created.MerchantID,
 		CreatedBy:    created.CreatedBy,
 	}
 

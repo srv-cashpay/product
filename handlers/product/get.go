@@ -14,6 +14,11 @@ func (b *domainHandler) Get(c echo.Context) error {
 		return res.ErrorBuilder(&res.ErrorConstant.InternalServerError, nil).Send(c)
 	}
 
+	merchantId, ok := c.Get("MerchantId").(string)
+	if !ok {
+		return res.ErrorBuilder(&res.ErrorConstant.InternalServerError, nil).Send(c)
+	}
+	paginationDTO.MerchantID = merchantId
 	paginationDTO.UserID = userid
 
 	if err := c.Bind(&paginationDTO); err != nil {
