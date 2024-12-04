@@ -56,9 +56,7 @@ func InitDB() *gorm.DB {
 	// Migrate the schema
 	db.AutoMigrate(
 		&entity.Product{},
-		&entity.Merk{},
-		&entity.Satuan{},
-		&entity.Type{},
+		&entity.MerchantAutoIncrement{},
 	)
 
 	return db

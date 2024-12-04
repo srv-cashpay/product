@@ -9,7 +9,7 @@ type ProductRequest struct {
 	Stock        int    `json:"stock"`
 	MinimalStock int    `json:"minimal_stock"`
 	Price        int    `json:"price"`
-	Status       bool   `json:"status"`
+	Status       int    `json:"status"`
 	CreatedBy    string `json:"created_by"`
 }
 
@@ -22,7 +22,7 @@ type ProductResponse struct {
 	Stock        int    `json:"stock"`
 	MinimalStock int    `json:"minimal_stock"`
 	Price        int    `json:"price"`
-	Status       bool   `json:"status"`
+	Status       string `json:"status"`
 	CreatedBy    string `json:"created_by"`
 }
 
@@ -57,7 +57,7 @@ type ProductUpdateRequest struct {
 	Stock        int    `json:"stock"`
 	MinimalStock int    `json:"minimal_stock"`
 	Price        int    `json:"price"`
-	Status       bool   `json:"status"`
+	Status       int    `json:"status"`
 	UpdatedBy    string `json:"updated_by"`
 	UserID       string `json:"user_id"`
 	MerchantID   string `json:"merchant_id"`
@@ -70,7 +70,7 @@ type ProductUpdateResponse struct {
 	Stock        int    `json:"stock"`
 	MinimalStock int    `json:"minimal_stock"`
 	Price        int    `json:"price"`
-	Status       bool   `json:"status"`
+	Status       int    `json:"status"`
 	UpdatedBy    string `json:"updated_by"`
 	UserID       string `json:"user_id"`
 	MerchantID   string `json:"merchant_id"`

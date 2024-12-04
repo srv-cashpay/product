@@ -22,7 +22,7 @@ func (b *productRepository) Update(req dto.ProductUpdateRequest) (dto.ProductUpd
 
 	// Cek apakah produk ada terlebih dahulu
 	var existingProduct entity.Product
-	err := b.DB.Where("user_id = ?", req.UserID).First(&existingProduct).Error
+	err := b.DB.Where("id = ?", req.ID).First(&existingProduct).Error
 	if err != nil {
 		return dto.ProductUpdateResponse{}, err
 	}
