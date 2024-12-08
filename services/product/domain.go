@@ -9,12 +9,8 @@ import (
 )
 
 type ProductService interface {
-	Create(req dto.ProductRequest) (dto.ProductResponse, error)
 	Get(context echo.Context, req *dto.Pagination) dto.Response
 	GetById(req dto.GetByIdRequest) (*dto.ProductResponse, error)
-	Delete(req dto.DeleteRequest) (dto.DeleteResponse, error)
-	BulkDelete(req dto.BulkDeleteRequest) (dto.BulkDeleteResponse, error)
-	Update(req dto.ProductUpdateRequest) (dto.ProductUpdateResponse, error)
 }
 
 type productService struct {

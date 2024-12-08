@@ -22,15 +22,8 @@ func New() *echo.Echo {
 
 	product := e.Group("/api/product", middlewares.AuthorizeJWT(JWT))
 	{
-		product.POST("/create", productH.Create)
 		product.GET("/:id", productH.GetById)
-		product.DELETE("/:id", productH.Delete)
-		product.DELETE("/bulk-delete", productH.BulkDelete)
-		product.PUT("/update/:id", productH.Update)
 		product.GET("/pagination", productH.Get)
-
-		// Add pagination route within product group
-
 	}
 
 	return e

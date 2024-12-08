@@ -6,9 +6,8 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/labstack/echo/v4 v4.12.0
 	github.com/srv-cashpay/auth v0.0.0-20241115085618-7025463ca04e
-	github.com/srv-cashpay/middlewares v0.0.0-20241115071029-1045a21a2fbf
+	github.com/srv-cashpay/middlewares v0.0.0-20241205063440-0179e9f99fa9
 	github.com/srv-cashpay/util v0.0.0-20241027032732-ad63c2c98116
-	golang.org/x/crypto v0.28.0
 	gorm.io/driver/postgres v1.5.9
 	gorm.io/gorm v1.25.12
 )
@@ -34,6 +33,7 @@ require (
 	github.com/teris-io/shortid v0.0.0-20220617161101-71ec9f2aa569 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasttemplate v1.2.2 // indirect
+	golang.org/x/crypto v0.28.0 // indirect
 	golang.org/x/net v0.24.0 // indirect
 	golang.org/x/sync v0.8.0 // indirect
 	golang.org/x/sys v0.26.0 // indirect
