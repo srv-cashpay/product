@@ -5,7 +5,6 @@ go 1.21.0
 require (
 	github.com/joho/godotenv v1.5.1
 	github.com/labstack/echo/v4 v4.12.0
-	github.com/srv-cashpay/auth v0.0.0-20241115085618-7025463ca04e
 	github.com/srv-cashpay/middlewares v0.0.0-20241205063440-0179e9f99fa9
 	github.com/srv-cashpay/util v0.0.0-20241027032732-ad63c2c98116
 	gorm.io/driver/postgres v1.5.9
