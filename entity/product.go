@@ -10,7 +10,9 @@ type Product struct {
 	ID           string         `gorm:"primary_key,omitempty" json:"id"`
 	UserID       string         `gorm:"type:varchar(36);index" json:"user_id"`
 	MerchantID   string         `gorm:"type:varchar(36);index" json:"merchant_id"`
-	ProductName  string         `gorm:"product_name,omitempty" json:"product_name"`
+	MerkID       string         `gorm:"merk_id" json:"merk_id"`
+	CategoryID   string         `gorm:"category_id" json:"category_id"`
+	ProductName  string         `gorm:"product_name,omitempty;type:varchar(70)" json:"product_name"`
 	Stock        int            `gorm:"stock,omitempty" json:"stock"`
 	MinimalStock int            `gorm:"minimal_stock,omitempty" json:"minimal_stock"`
 	Price        int            `gorm:"price,omitempty" json:"price"`

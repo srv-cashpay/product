@@ -4,6 +4,8 @@ type ProductRequest struct {
 	ID           string `json:"id"`
 	UserID       string `json:"user_id"`
 	MerchantID   string `json:"merchant_id"`
+	MerkID       string `json:"merk_id"`
+	CategoryID   string `json:"category_id"`
 	ProductName  string `json:"product_name"`
 	Description  string `json:"description"`
 	Stock        int    `json:"stock"`
@@ -17,6 +19,8 @@ type ProductResponse struct {
 	ID           string `json:"id"`
 	UserID       string `json:"user_id"`
 	MerchantID   string `json:"merchant_id"`
+	MerkID       string `json:"merk_id"`
+	CategoryID   string `json:"category_id"`
 	ProductName  string `json:"product_name"`
 	Description  string `json:"description"`
 	Stock        int    `json:"stock"`
