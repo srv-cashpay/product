@@ -8,9 +8,11 @@ import (
 
 type Product struct {
 	ID           string         `gorm:"primary_key,omitempty" json:"id"`
+	Barcode      string         `gorm:"barcode" json:"barcode"`
 	UserID       string         `gorm:"type:varchar(36);index" json:"user_id"`
 	MerchantID   string         `gorm:"type:varchar(36);index" json:"merchant_id"`
 	MerkID       string         `gorm:"merk_id" json:"merk_id"`
+	PictureID    string         `gorm:"picture_id" json:"picture_id"`
 	CategoryID   string         `gorm:"category_id" json:"category_id"`
 	ProductName  string         `gorm:"product_name,omitempty;type:varchar(70)" json:"product_name"`
 	Stock        int            `gorm:"stock,omitempty" json:"stock"`

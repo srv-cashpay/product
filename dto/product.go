@@ -2,6 +2,7 @@ package dto
 
 type ProductRequest struct {
 	ID           string `json:"id"`
+	Barcode      string `json:"barcode"`
 	UserID       string `json:"user_id"`
 	MerchantID   string `json:"merchant_id"`
 	MerkID       string `json:"merk_id"`
@@ -17,6 +18,7 @@ type ProductRequest struct {
 
 type ProductResponse struct {
 	ID           string `json:"id"`
+	Barcode      string `json:"barcode"`
 	UserID       string `json:"user_id"`
 	MerchantID   string `json:"merchant_id"`
 	MerkID       string `json:"merk_id"`
@@ -58,6 +60,7 @@ type BulkDeleteResponse struct {
 type ProductUpdateRequest struct {
 	ID           string `json:"id"`
 	ProductName  string `json:"product_name"`
+	Barcode      string `json:"barcode"`
 	Stock        int    `json:"stock"`
 	MinimalStock int    `json:"minimal_stock"`
 	Price        int    `json:"price"`
@@ -71,6 +74,7 @@ type ProductUpdateRequest struct {
 type ProductUpdateResponse struct {
 	ID           string `json:"id"`
 	ProductName  string `json:"product_name"`
+	Barcode      string `json:"barcode"`
 	Stock        int    `json:"stock"`
 	MinimalStock int    `json:"minimal_stock"`
 	Price        int    `json:"price"`

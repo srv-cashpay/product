@@ -57,6 +57,8 @@ func InitDB() *gorm.DB {
 	db.AutoMigrate(
 		&entity.Product{},
 		&entity.MerchantAutoIncrement{},
+		&entity.CategoryAutoIncrement{},
+		&entity.MerkAutoIncrement{},
 	)
 
 	return db

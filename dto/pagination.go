@@ -3,6 +3,7 @@ package dto
 type Pagination struct {
 	UserID       string      `json:"-"`
 	MerchantID   string      `json:"-"`
+	PictureID    string      `json:"-"`
 	Limit        int         `json:"limit"`
 	Page         int         `json:"page"`
 	Sort         string      `json:"sort"`
