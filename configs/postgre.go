@@ -59,6 +59,7 @@ func InitDB() *gorm.DB {
 		&entity.MerchantAutoIncrement{},
 		&entity.CategoryAutoIncrement{},
 		&entity.MerkAutoIncrement{},
+		&entity.UploadedFile{},
 	)
 
 	return db
