@@ -15,7 +15,20 @@ func (b *productRepository) GetById(req dto.GetByIdRequest) (*dto.ProductRespons
 	}
 
 	response := &dto.ProductResponse{
-		ProductName: tr.ProductName,
+		ID:           tr.ID,
+		Barcode:      tr.Barcode,
+		UserID:       tr.UserID,
+		MerchantID:   tr.MerchantID,
+		MerkID:       tr.MerkID,
+		CategoryID:   tr.CategoryID,
+		ProductName:  tr.ProductName,
+		Description:  tr.Description,
+		Stock:        tr.Stock,
+		MinimalStock: tr.MinimalStock,
+		Price:        tr.Price,
+		Status:       tr.Status,
+		CreatedBy:    tr.CreatedBy,
+		CreatedAt:    dto.Timestamp(tr.CreatedAt),
 	}
 
 	return response, nil
