@@ -21,7 +21,7 @@ func (r *productRepository) Get(req *dto.Pagination) (RepositoryResult, int) {
 
 	// Ambil data sesuai limit, offset, dan urutan
 	find := r.DB.Preload("Image").
-		Where("merchant_id = ?", req.MerchantID).
+		Where("merchant_id = ? AND status = ?", req.MerchantID, 1).
 		Limit(req.Limit).
 		Offset(offset).
 		Order(req.Sort)
