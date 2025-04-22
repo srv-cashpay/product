@@ -1,12 +1,14 @@
 module github.com/srv-cashpay/product
 
-go 1.21.0
+go 1.23.0
+
+toolchain go1.23.8
 
 require (
 	github.com/joho/godotenv v1.5.1
 	github.com/labstack/echo/v4 v4.12.0
-	github.com/srv-cashpay/middlewares v0.0.0-20241205063440-0179e9f99fa9
-	github.com/srv-cashpay/util v0.0.0-20241027032732-ad63c2c98116
+	github.com/srv-cashpay/middlewares v0.0.0-20250120090519-4aa5ca3d5cac
+	github.com/srv-cashpay/util v0.0.0-20250421062020-671f81a9b5f4
 	gorm.io/driver/postgres v1.5.9
 	gorm.io/gorm v1.25.12
 )
@@ -34,8 +36,8 @@ require (
 	github.com/valyala/fasttemplate v1.2.2 // indirect
 	golang.org/x/crypto v0.28.0 // indirect
 	golang.org/x/net v0.24.0 // indirect
-	golang.org/x/sync v0.8.0 // indirect
-	golang.org/x/sys v0.26.0 // indirect
-	golang.org/x/text v0.19.0 // indirect
+	golang.org/x/sync v0.13.0 // indirect
+	golang.org/x/sys v0.32.0 // indirect
+	golang.org/x/text v0.24.0 // indirect
 	golang.org/x/time v0.5.0 // indirect
 )
