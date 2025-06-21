@@ -9,7 +9,7 @@ import (
 )
 
 type DomainRepository interface {
-	Get(req *dto.Pagination) (RepositoryResult, int)
+	Get(req *dto.Pagination) (dto.ProductPaginationResponse, int)
 	GetById(req dto.GetByIdRequest) (*dto.ProductResponse, error)
 }
 

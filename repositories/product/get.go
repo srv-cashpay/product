@@ -10,7 +10,7 @@ import (
 	"github.com/srv-cashpay/product/helpers"
 )
 
-func (r *productRepository) Get(req *dto.Pagination) (RepositoryResult, int) {
+func (r *productRepository) Get(req *dto.Pagination) (dto.ProductPaginationResponse, int) {
 	var products []entity.Product
 
 	var totalRows int64
@@ -25,7 +25,6 @@ func (r *productRepository) Get(req *dto.Pagination) (RepositoryResult, int) {
 		Limit(req.Limit).
 		Offset(offset).
 		Order(req.Sort)
-	countQuery := r.DB.Model(&entity.Product{}).Where("merchant_id = ?", req.MerchantID)
 
 	// Generate where query untuk search
 	if req.Searchs != nil {
@@ -34,37 +33,13 @@ func (r *productRepository) Get(req *dto.Pagination) (RepositoryResult, int) {
 			action := value.Action
 			query := value.Query
 
-			if column == "category.category_name" {
-				find = find.Joins("JOIN categories ON categories.id = products.category_id")
-				countQuery = countQuery.Joins("JOIN categories ON categories.id = products.category_id")
-
-				switch action {
-				case "equals":
-					find = find.Where("categories.category_name = ?", query)
-					countQuery = countQuery.Where("categories.category_name = ?", query)
-				case "contains":
-					find = find.Where("categories.category_name LIKE ?", "%"+query+"%")
-					countQuery = countQuery.Where("categories.category_name LIKE ?", "%"+query+"%")
-				case "in":
-					list := strings.Split(query, ",")
-					find = find.Where("categories.category_name IN (?)", list)
-					countQuery = countQuery.Where("categories.category_name IN (?)", list)
-				}
-				continue
-			}
-
 			switch action {
 			case "equals":
 				find = find.Where(fmt.Sprintf("%s = ?", column), query)
-				countQuery = countQuery.Where(fmt.Sprintf("%s = ?", column), query)
-
 			case "contains":
 				find = find.Where(fmt.Sprintf("%s LIKE ?", column), "%"+query+"%")
-				countQuery = countQuery.Where(fmt.Sprintf("%s LIKE ?", column), "%"+query+"%")
 			case "in":
-				list := strings.Split(query, ",")
 				find = find.Where(fmt.Sprintf("%s IN (?)", column), strings.Split(query, ","))
-				countQuery = countQuery.Where(fmt.Sprintf("%s IN (?)", column), list)
 			}
 		}
 	}
@@ -73,13 +48,13 @@ func (r *productRepository) Get(req *dto.Pagination) (RepositoryResult, int) {
 
 	// Periksa jika ada error saat pengambilan data
 	if errFind := find.Error; errFind != nil {
-		return RepositoryResult{Error: errFind}, totalPages
+		return dto.ProductPaginationResponse{}, totalPages
 	}
 
 	req.Rows = products
 
-	if errCount := countQuery.Count(&totalRows).Error; errCount != nil {
-		return RepositoryResult{Error: errCount}, totalPages
+	if errCount := r.DB.Model(&entity.Product{}).Where("merchant_id = ?", req.MerchantID).Count(&totalRows).Error; errCount != nil {
+		return dto.ProductPaginationResponse{}, totalPages
 	}
 
 	for i := range products {
@@ -112,5 +87,42 @@ func (r *productRepository) Get(req *dto.Pagination) (RepositoryResult, int) {
 	req.FromRow = fromRow
 	req.ToRow = toRow
 
-	return RepositoryResult{Result: req}, totalPages
+	var productResponses []dto.ProductResponse
+	for _, p := range products {
+		productResponses = append(productResponses, dto.ProductResponse{
+			ID:           p.ID,
+			Barcode:      p.Barcode,
+			UserID:       p.UserID,
+			MerchantID:   p.MerchantID,
+			MerkID:       p.MerkID,
+			CategoryID:   p.CategoryID,
+			CategoryName: p.Category.CategoryName,
+			ProductName:  p.ProductName,
+			Description:  p.Description,
+			Stock:        p.Stock,
+			MinimalStock: p.MinimalStock,
+			Price:        p.Price,
+			Status:       p.Status,
+			CreatedBy:    p.CreatedBy,
+		})
+	}
+
+	response := dto.ProductPaginationResponse{
+		Limit:        req.Limit,
+		Page:         req.Page,
+		Sort:         req.Sort,
+		TotalRows:    req.TotalRows,
+		TotalPages:   req.TotalPages,
+		FirstPage:    req.FirstPage,
+		PreviousPage: req.PreviousPage,
+		NextPage:     req.NextPage,
+		LastPage:     req.LastPage,
+		FromRow:      req.FromRow,
+		ToRow:        req.ToRow,
+		Data:         productResponses,
+		Searchs:      req.Searchs,
+	}
+	return response, totalPages
+
+	// return RepositoryResult{Result: req}, totalPages
 }

@@ -25,6 +25,7 @@ type ProductResponse struct {
 	MerchantID   string    `json:"merchant_id"`
 	MerkID       string    `json:"merk_id"`
 	CategoryID   string    `json:"category_id"`
+	CategoryName string    `json:"category_name"`
 	ProductName  string    `json:"product_name"`
 	Description  string    `json:"description"`
 	Stock        int       `json:"stock"`
@@ -33,6 +34,22 @@ type ProductResponse struct {
 	Status       int       `json:"status"`
 	CreatedBy    string    `json:"created_by"`
 	CreatedAt    Timestamp `json:"created_at"`
+}
+
+type ProductPaginationResponse struct {
+	Limit        int               `json:"limit"`
+	Page         int               `json:"page"`
+	Sort         string            `json:"sort"`
+	TotalRows    int               `json:"total_rows"`
+	TotalPages   int               `json:"total_page"`
+	FirstPage    string            `json:"first_page"`
+	PreviousPage string            `json:"previous_page"`
+	NextPage     string            `json:"next_page"`
+	LastPage     string            `json:"last_page"`
+	FromRow      int               `json:"from_row"`
+	ToRow        int               `json:"to_row"`
+	Data         []ProductResponse `json:"data"`
+	Searchs      []Search          `json:"searchs"`
 }
 
 type GetByIdRequest struct {
