@@ -7,6 +7,7 @@ toolchain go1.23.8
 require (
 	github.com/joho/godotenv v1.5.1
 	github.com/labstack/echo/v4 v4.12.0
+	github.com/srv-cashpay/merchant v0.0.0-20250621042253-ebb992958600
 	github.com/srv-cashpay/middlewares v0.0.0-20250120090519-4aa5ca3d5cac
 	github.com/srv-cashpay/util v0.0.0-20250421062020-671f81a9b5f4
 	gorm.io/driver/postgres v1.5.9
@@ -31,7 +32,6 @@ require (
 	github.com/olivere/elastic/v7 v7.0.32 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
-	github.com/srv-cashpay/merchant v0.0.0-20250621015251-b11382238dfd
 	github.com/teris-io/shortid v0.0.0-20220617161101-71ec9f2aa569 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasttemplate v1.2.2 // indirect

@@ -44,8 +44,8 @@ github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZb
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/sirupsen/logrus v1.9.3 h1:dueUQJ1C2q9oE3F7wvmSGAaVtTmUizReu6fjN8uqzbQ=
 github.com/sirupsen/logrus v1.9.3/go.mod h1:naHLuLoDiP4jHNo9R0sCBMtWGeIprob74mVsIT4qYEQ=
-github.com/srv-cashpay/merchant v0.0.0-20250621015251-b11382238dfd h1:gxisGlYVeJhSM/MYPkBJi05aFBDLJNa/bghBRXi4xns=
-github.com/srv-cashpay/merchant v0.0.0-20250621015251-b11382238dfd/go.mod h1:fRriSE02PzuscvSCV5InSVTeJFXcyfDM83Jp0NRrY5U=
+github.com/srv-cashpay/merchant v0.0.0-20250621042253-ebb992958600 h1:VkQ95Sc/7oDnAXyHiuxwApHduB+gweizauqAbGyyvi0=
+github.com/srv-cashpay/merchant v0.0.0-20250621042253-ebb992958600/go.mod h1:N6TGXXvpDN2yVgbEgIk4Q2pXqgCaJliIMy6FFVylIvg=
 github.com/srv-cashpay/middlewares v0.0.0-20250120090519-4aa5ca3d5cac h1:TQ8j+6wzc6G+NVCe1VHkikHuHElhlsLRa0oIwXgMPwE=
 github.com/srv-cashpay/middlewares v0.0.0-20250120090519-4aa5ca3d5cac/go.mod h1:1rc8H+Ph1tH7PQ8OEU/vXjVzOf7Q0KpcFJ6hmkeylL8=
 github.com/srv-cashpay/util v0.0.0-20250421062020-671f81a9b5f4 h1:fO3HGqd4dN45gXe6JyGxiIQ5lChipRFKRAa/rCRdkVg=
