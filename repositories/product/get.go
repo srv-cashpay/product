@@ -33,13 +33,27 @@ func (r *productRepository) Get(req *dto.Pagination) (dto.ProductPaginationRespo
 			action := value.Action
 			query := value.Query
 
-			switch action {
-			case "equals":
-				find = find.Where(fmt.Sprintf("%s = ?", column), query)
-			case "contains":
-				find = find.Where(fmt.Sprintf("%s LIKE ?", column), "%"+query+"%")
-			case "in":
-				find = find.Where(fmt.Sprintf("%s IN (?)", column), strings.Split(query, ","))
+			if column == "category.category_name" {
+				// JOIN ke table categories
+				find = find.Joins("JOIN categories ON categories.id = products.category_id")
+
+				switch action {
+				case "equals":
+					find = find.Where("categories.category_name = ?", query)
+				case "contains":
+					find = find.Where("categories.category_name LIKE ?", "%"+query+"%")
+				case "in":
+					find = find.Where("categories.category_name IN (?)", strings.Split(query, ","))
+				}
+			} else {
+				switch action {
+				case "equals":
+					find = find.Where(fmt.Sprintf("%s = ?", column), query)
+				case "contains":
+					find = find.Where(fmt.Sprintf("%s LIKE ?", column), "%"+query+"%")
+				case "in":
+					find = find.Where(fmt.Sprintf("%s IN (?)", column), strings.Split(query, ","))
+				}
 			}
 		}
 	}
