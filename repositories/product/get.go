@@ -25,6 +25,7 @@ func (r *productRepository) Get(req *dto.Pagination) (RepositoryResult, int) {
 		Limit(req.Limit).
 		Offset(offset).
 		Order(req.Sort)
+	countQuery := r.DB.Model(&entity.Product{}).Where("merchant_id = ?", req.MerchantID)
 
 	// Generate where query untuk search
 	if req.Searchs != nil {
@@ -33,16 +34,21 @@ func (r *productRepository) Get(req *dto.Pagination) (RepositoryResult, int) {
 			action := value.Action
 			query := value.Query
 
-			// khusus pencarian berdasarkan category_name
 			if column == "category.category_name" {
 				find = find.Joins("JOIN categories ON categories.id = products.category_id")
+				countQuery = countQuery.Joins("JOIN categories ON categories.id = products.category_id")
+
 				switch action {
 				case "equals":
 					find = find.Where("categories.category_name = ?", query)
+					countQuery = countQuery.Where("categories.category_name = ?", query)
 				case "contains":
 					find = find.Where("categories.category_name LIKE ?", "%"+query+"%")
+					countQuery = countQuery.Where("categories.category_name LIKE ?", "%"+query+"%")
 				case "in":
-					find = find.Where("categories.category_name IN (?)", strings.Split(query, ","))
+					list := strings.Split(query, ",")
+					find = find.Where("categories.category_name IN (?)", list)
+					countQuery = countQuery.Where("categories.category_name IN (?)", list)
 				}
 				continue
 			}
@@ -50,10 +56,15 @@ func (r *productRepository) Get(req *dto.Pagination) (RepositoryResult, int) {
 			switch action {
 			case "equals":
 				find = find.Where(fmt.Sprintf("%s = ?", column), query)
+				countQuery = countQuery.Where(fmt.Sprintf("%s = ?", column), query)
+
 			case "contains":
 				find = find.Where(fmt.Sprintf("%s LIKE ?", column), "%"+query+"%")
+				countQuery = countQuery.Where(fmt.Sprintf("%s LIKE ?", column), "%"+query+"%")
 			case "in":
+				list := strings.Split(query, ",")
 				find = find.Where(fmt.Sprintf("%s IN (?)", column), strings.Split(query, ","))
+				countQuery = countQuery.Where(fmt.Sprintf("%s IN (?)", column), list)
 			}
 		}
 	}
