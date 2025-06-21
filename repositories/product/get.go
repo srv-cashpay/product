@@ -12,21 +12,19 @@ import (
 
 func (r *productRepository) Get(req *dto.Pagination) (dto.ProductPaginationResponse, int) {
 	var products []entity.Product
-
 	var totalRows int64
 	totalPages, fromRow, toRow := 0, 0, 0
-
-	// Ubah offset agar sesuai dengan page yang dimulai dari 1
 	offset := (req.Page - 1) * req.Limit
 
-	// Ambil data sesuai limit, offset, dan urutan
 	find := r.DB.Preload("Category").Preload("Image").
 		Where("merchant_id = ? AND status = ?", req.MerchantID, 1).
 		Limit(req.Limit).
 		Offset(offset).
 		Order(req.Sort)
 
-	// Generate where query untuk search
+	countQuery := r.DB.Model(&entity.Product{}).Where("merchant_id = ? AND status = ?", req.MerchantID, 1)
+
+	// Filtering pencarian
 	if req.Searchs != nil {
 		for _, value := range req.Searchs {
 			column := value.Column
@@ -34,40 +32,45 @@ func (r *productRepository) Get(req *dto.Pagination) (dto.ProductPaginationRespo
 			query := value.Query
 
 			if column == "category.category_name" {
-				// JOIN ke table categories
 				find = find.Joins("JOIN categories ON categories.id = products.category_id")
+				countQuery = countQuery.Joins("JOIN categories ON categories.id = products.category_id")
 
 				switch action {
 				case "equals":
 					find = find.Where("categories.category_name = ?", query)
+					countQuery = countQuery.Where("categories.category_name = ?", query)
 				case "contains":
 					find = find.Where("categories.category_name LIKE ?", "%"+query+"%")
+					countQuery = countQuery.Where("categories.category_name LIKE ?", "%"+query+"%")
 				case "in":
-					find = find.Where("categories.category_name IN (?)", strings.Split(query, ","))
+					list := strings.Split(query, ",")
+					find = find.Where("categories.category_name IN ?", list)
+					countQuery = countQuery.Where("categories.category_name IN ?", list)
 				}
-			} else {
-				switch action {
-				case "equals":
-					find = find.Where(fmt.Sprintf("%s = ?", column), query)
-				case "contains":
-					find = find.Where(fmt.Sprintf("%s LIKE ?", column), "%"+query+"%")
-				case "in":
-					find = find.Where(fmt.Sprintf("%s IN (?)", column), strings.Split(query, ","))
-				}
+				continue
+			}
+
+			// Default field filtering
+			switch action {
+			case "equals":
+				find = find.Where(fmt.Sprintf("%s = ?", column), query)
+				countQuery = countQuery.Where(fmt.Sprintf("%s = ?", column), query)
+			case "contains":
+				find = find.Where(fmt.Sprintf("%s LIKE ?", column), "%"+query+"%")
+				countQuery = countQuery.Where(fmt.Sprintf("%s LIKE ?", column), "%"+query+"%")
+			case "in":
+				list := strings.Split(query, ",")
+				find = find.Where(fmt.Sprintf("%s IN ?", column), list)
+				countQuery = countQuery.Where(fmt.Sprintf("%s IN ?", column), list)
 			}
 		}
 	}
 
-	find = find.Find(&products)
-
-	// Periksa jika ada error saat pengambilan data
-	if errFind := find.Error; errFind != nil {
+	if err := find.Find(&products).Error; err != nil {
 		return dto.ProductPaginationResponse{}, totalPages
 	}
 
-	req.Rows = products
-
-	if errCount := r.DB.Model(&entity.Product{}).Where("merchant_id = ?", req.MerchantID).Count(&totalRows).Error; errCount != nil {
+	if err := countQuery.Count(&totalRows).Error; err != nil {
 		return dto.ProductPaginationResponse{}, totalPages
 	}
 
@@ -75,32 +78,21 @@ func (r *productRepository) Get(req *dto.Pagination) (dto.ProductPaginationRespo
 		products[i].ProductName = helpers.TruncateString(products[i].ProductName, 47)
 	}
 
+	// Pagination info
 	req.TotalRows = int(totalRows)
-
-	// Hitung total halaman berdasarkan limit
 	totalPages = int(math.Ceil(float64(totalRows) / float64(req.Limit)))
 	req.TotalPages = totalPages
-	// Hitung `fromRow` dan `toRow` untuk page saat ini
-	if req.Page == 1 {
-		// Untuk halaman pertama
-		fromRow = 1
-		toRow = req.Limit
-	} else {
-		if req.Page <= totalPages {
-			fromRow = (req.Page-1)*req.Limit + 1
-			toRow = req.Page * req.Limit
-		}
-	}
 
-	// Pastikan `toRow` tidak melebihi `totalRows`
+	fromRow = offset + 1
+	toRow = offset + req.Limit
 	if toRow > int(totalRows) {
 		toRow = int(totalRows)
 	}
 
-	// Set hasil akhir
 	req.FromRow = fromRow
 	req.ToRow = toRow
 
+	// Mapping ke DTO response
 	var productResponses []dto.ProductResponse
 	for _, p := range products {
 		productResponses = append(productResponses, dto.ProductResponse{
@@ -121,7 +113,7 @@ func (r *productRepository) Get(req *dto.Pagination) (dto.ProductPaginationRespo
 		})
 	}
 
-	response := dto.ProductPaginationResponse{
+	return dto.ProductPaginationResponse{
 		Limit:        req.Limit,
 		Page:         req.Page,
 		Sort:         req.Sort,
@@ -135,8 +127,5 @@ func (r *productRepository) Get(req *dto.Pagination) (dto.ProductPaginationRespo
 		ToRow:        req.ToRow,
 		Data:         productResponses,
 		Searchs:      req.Searchs,
-	}
-	return response, totalPages
-
-	// return RepositoryResult{Result: req}, totalPages
+	}, totalPages
 }
