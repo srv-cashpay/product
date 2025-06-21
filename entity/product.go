@@ -14,7 +14,7 @@ type Product struct {
 	MerchantID   string             `gorm:"type:varchar(36);index" json:"merchant_id"`
 	MerkID       string             `gorm:"merk_id" json:"merk_id"`
 	Image        *UploadedFile      `gorm:"foreignKey:ProductID" json:"image"`
-	Category     *category.Category `gorm:"foreignKey:CategoryID;references:ID" json:"category"`
+	Category     *category.Category `gorm:"foreignKey:CategoryID" json:"category"`
 	CategoryID   string             `gorm:"category_id" json:"category_id"`
 	ProductName  string             `gorm:"product_name,omitempty;type:varchar(70)" json:"product_name"`
 	Stock        int                `gorm:"stock,omitempty" json:"stock"`
