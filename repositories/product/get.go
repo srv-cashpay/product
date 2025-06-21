@@ -78,10 +78,8 @@ func (r *productRepository) Get(req *dto.Pagination) (RepositoryResult, int) {
 
 	req.Rows = products
 
-	// Hitung total data
-	if errCount := r.DB.Model(&entity.Product{}).Where("merchant_id = ? AND status = ?", req.MerchantID, 1).Count(&totalRows).Error; errCount != nil {
-		return RepositoryResult{Error: errCount}, totalPages
-	}
+	if errCount := countQuery.Count(&totalRows).Error; errCount != nil {
+
 
 	for i := range products {
 		products[i].ProductName = helpers.TruncateString(products[i].ProductName, 47)
