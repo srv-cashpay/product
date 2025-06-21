@@ -79,7 +79,8 @@ func (r *productRepository) Get(req *dto.Pagination) (RepositoryResult, int) {
 	req.Rows = products
 
 	if errCount := countQuery.Count(&totalRows).Error; errCount != nil {
-
+		return RepositoryResult{Error: errCount}, totalPages
+	}
 
 	for i := range products {
 		products[i].ProductName = helpers.TruncateString(products[i].ProductName, 47)
