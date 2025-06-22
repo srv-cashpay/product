@@ -23,7 +23,7 @@ func (s *productService) Get(context echo.Context, req *dto.Pagination) dto.Resp
 	}
 
 	// URL dengan base 1 untuk first page, previous page, next page, dan last page
-	data := operationResult
+	data := operationResult.Result.(*dto.Pagination)
 	data.FirstPage = fmt.Sprintf("%s?limit=%d&page=1&sort=%s", urlPath, req.Limit, req.Sort) + searchQueryParams
 	data.LastPage = fmt.Sprintf("%s?limit=%d&page=%d&sort=%s", urlPath, req.Limit, totalPages, req.Sort) + searchQueryParams
 

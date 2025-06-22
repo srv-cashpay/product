@@ -10,7 +10,7 @@ import (
 	"github.com/srv-cashpay/product/helpers"
 )
 
-func (r *productRepository) Get(req *dto.Pagination) (dto.ProductPaginationResponse, int) {
+func (r *productRepository) Get(req *dto.Pagination) (RepositoryResult, int) {
 	var products []entity.Product
 	var totalRows int64
 	totalPages, fromRow, toRow := 0, 0, 0
@@ -42,13 +42,16 @@ func (r *productRepository) Get(req *dto.Pagination) (dto.ProductPaginationRespo
 		}
 	}
 
-	if err := find.Find(&products).Error; err != nil {
-		return dto.ProductPaginationResponse{}, totalPages
+	find = find.Find(&products)
+
+	// Periksa jika ada error saat pengambilan data
+	if errFind := find.Error; errFind != nil {
+		return RepositoryResult{Error: errFind}, totalPages
 	}
 
 	// Hitung total data
 	if errCount := r.DB.Model(&entity.Product{}).Where("merchant_id = ?", req.MerchantID).Count(&totalRows).Error; errCount != nil {
-		return dto.ProductPaginationResponse{}, totalPages
+		return RepositoryResult{Error: errCount}, totalPages
 	}
 	for i := range products {
 		products[i].ProductName = helpers.TruncateString(products[i].ProductName, 47)
@@ -68,40 +71,5 @@ func (r *productRepository) Get(req *dto.Pagination) (dto.ProductPaginationRespo
 	req.FromRow = fromRow
 	req.ToRow = toRow
 
-	// Mapping ke DTO response
-	var productResponses []dto.ProductResponse
-	for _, p := range products {
-		productResponses = append(productResponses, dto.ProductResponse{
-			ID:           p.ID,
-			Barcode:      p.Barcode,
-			UserID:       p.UserID,
-			MerchantID:   p.MerchantID,
-			MerkID:       p.MerkID,
-			CategoryID:   p.CategoryID,
-			CategoryName: p.Category.CategoryName,
-			ProductName:  p.ProductName,
-			Description:  p.Description,
-			Stock:        p.Stock,
-			MinimalStock: p.MinimalStock,
-			Price:        p.Price,
-			Status:       p.Status,
-			CreatedBy:    p.CreatedBy,
-		})
-	}
-
-	return dto.ProductPaginationResponse{
-		Limit:        req.Limit,
-		Page:         req.Page,
-		Sort:         req.Sort,
-		TotalRows:    req.TotalRows,
-		TotalPages:   req.TotalPages,
-		FirstPage:    req.FirstPage,
-		PreviousPage: req.PreviousPage,
-		NextPage:     req.NextPage,
-		LastPage:     req.LastPage,
-		FromRow:      req.FromRow,
-		ToRow:        req.ToRow,
-		Data:         productResponses,
-		Searchs:      req.Searchs,
-	}, totalPages
+	return RepositoryResult{Result: req}, totalPages
 }
