@@ -22,8 +22,6 @@ func (r *productRepository) Get(req *dto.Pagination) (dto.ProductPaginationRespo
 		Offset(offset).
 		Order(req.Sort)
 
-	countQuery := r.DB.Model(&entity.Product{}).Where("merchant_id = ? AND status = ?", req.MerchantID, 1)
-
 	// Filtering pencarian
 	if req.Searchs != nil {
 		for _, value := range req.Searchs {
@@ -31,37 +29,15 @@ func (r *productRepository) Get(req *dto.Pagination) (dto.ProductPaginationRespo
 			action := value.Action
 			query := value.Query
 
-			if column == "category.category_name" {
-				find = find.Joins("JOIN categories ON categories.id = products.category_id")
-				countQuery = countQuery.Joins("JOIN categories ON categories.id = products.category_id")
-
-				switch action {
-				case "equals":
-					find = find.Where("categories.category_name = ?", query)
-					countQuery = countQuery.Where("categories.category_name = ?", query)
-				case "contains":
-					find = find.Where("categories.category_name LIKE ?", "%"+query+"%")
-					countQuery = countQuery.Where("categories.category_name LIKE ?", "%"+query+"%")
-				case "in":
-					list := strings.Split(query, ",")
-					find = find.Where("categories.category_name IN ?", list)
-					countQuery = countQuery.Where("categories.category_name IN ?", list)
-				}
-				continue
-			}
-
 			// Default field filtering
 			switch action {
 			case "equals":
 				find = find.Where(fmt.Sprintf("%s = ?", column), query)
-				countQuery = countQuery.Where(fmt.Sprintf("%s = ?", column), query)
 			case "contains":
 				find = find.Where(fmt.Sprintf("%s LIKE ?", column), "%"+query+"%")
-				countQuery = countQuery.Where(fmt.Sprintf("%s LIKE ?", column), "%"+query+"%")
 			case "in":
 				list := strings.Split(query, ",")
 				find = find.Where(fmt.Sprintf("%s IN ?", column), list)
-				countQuery = countQuery.Where(fmt.Sprintf("%s IN ?", column), list)
 			}
 		}
 	}
@@ -70,10 +46,10 @@ func (r *productRepository) Get(req *dto.Pagination) (dto.ProductPaginationRespo
 		return dto.ProductPaginationResponse{}, totalPages
 	}
 
-	if err := countQuery.Count(&totalRows).Error; err != nil {
+	// Hitung total data
+	if errCount := r.DB.Model(&entity.Product{}).Where("merchant_id = ?", req.MerchantID).Count(&totalRows).Error; errCount != nil {
 		return dto.ProductPaginationResponse{}, totalPages
 	}
-
 	for i := range products {
 		products[i].ProductName = helpers.TruncateString(products[i].ProductName, 47)
 	}
