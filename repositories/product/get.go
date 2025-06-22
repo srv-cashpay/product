@@ -36,8 +36,7 @@ func (r *productRepository) Get(req *dto.Pagination) (RepositoryResult, int) {
 			case "contains":
 				find = find.Where(fmt.Sprintf("%s LIKE ?", column), "%"+query+"%")
 			case "in":
-				list := strings.Split(query, ",")
-				find = find.Where(fmt.Sprintf("%s IN ?", column), list)
+				find = find.Where(fmt.Sprintf("%s IN (?)", column), strings.Split(query, ","))
 			}
 		}
 	}
