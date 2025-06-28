@@ -10,12 +10,17 @@ func (h *domainHandler) GetUrl(c echo.Context) error {
 	var req dto.ProductRequest
 	var resp dto.ProductResponse
 
-	userId, ok := c.Get("UserId").(string)
+	userid, ok := c.Get("UserId").(string)
 	if !ok {
 		return res.ErrorBuilder(&res.ErrorConstant.InternalServerError, nil).Send(c)
 	}
 
-	req.UserID = userId
+	merchantId, ok := c.Get("MerchantId").(string)
+	if !ok {
+		return res.ErrorBuilder(&res.ErrorConstant.InternalServerError, nil).Send(c)
+	}
+	req.MerchantID = merchantId
+	req.UserID = userid
 
 	resp, err := h.serviceProduct.GetUrl(req)
 	if err != nil {

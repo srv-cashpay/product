@@ -8,7 +8,7 @@ import (
 func (u *productRepository) GetUrl(req dto.ProductRequest) (dto.ProductResponse, error) {
 	var existingUser entity.Product
 
-	if err := u.DB.Where("id = ?", req.UserID).Find(&existingUser).Error; err != nil {
+	if err := u.DB.Where("merchant_id = ?", req.MerchantID).Find(&existingUser).Error; err != nil {
 		return dto.ProductResponse{}, err
 	}
 
