@@ -9,17 +9,11 @@ import (
 func (b *domainHandler) Menu(c echo.Context) error {
 	paginationDTO := helpers.GeneratePaginationRequest(c)
 
-	userid, ok := c.Get("UserId").(string)
-	if !ok {
+	merchantID := c.QueryParam("merchant_id")
+	if merchantID == "" {
 		return res.ErrorBuilder(&res.ErrorConstant.InternalServerError, nil).Send(c)
 	}
-
-	merchantId, ok := c.Get("MerchantId").(string)
-	if !ok {
-		return res.ErrorBuilder(&res.ErrorConstant.InternalServerError, nil).Send(c)
-	}
-	paginationDTO.MerchantID = merchantId
-	paginationDTO.UserID = userid
+	paginationDTO.MerchantID = merchantID
 
 	if err := c.Bind(&paginationDTO); err != nil {
 		return c.JSON(400, "Invalid request")

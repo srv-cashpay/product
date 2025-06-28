@@ -16,7 +16,7 @@ func (s *productService) Menu(context echo.Context, req *dto.Pagination) dto.Res
 
 	// Set page 1-based untuk pagination link
 	urlPath := context.Request().URL.Path
-	searchQueryParams := ""
+	searchQueryParams := fmt.Sprintf("?merchant_id=%s&limit=%d", req.MerchantID, req.Limit)
 
 	for _, search := range req.Searchs {
 		searchQueryParams += fmt.Sprintf("&%s.%s=%s", search.Column, search.Action, search.Query)
