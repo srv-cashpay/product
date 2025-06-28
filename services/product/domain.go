@@ -10,6 +10,7 @@ import (
 
 type ProductService interface {
 	Get(context echo.Context, req *dto.Pagination) dto.Response
+	Menu(context echo.Context, req *dto.Pagination) dto.Response
 	GetById(req dto.GetByIdRequest) (*dto.ProductResponse, error)
 }
 
