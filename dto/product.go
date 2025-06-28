@@ -36,6 +36,10 @@ type ProductResponse struct {
 	CreatedAt    Timestamp `json:"created_at"`
 }
 
+type UrlResponse struct {
+	MerchantID string `json:"merchant_id"`
+}
+
 type ProductPaginationResponse struct {
 	Limit        int               `json:"limit"`
 	Page         int               `json:"page"`

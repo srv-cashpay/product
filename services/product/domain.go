@@ -12,7 +12,7 @@ type ProductService interface {
 	Get(context echo.Context, req *dto.Pagination) dto.Response
 	Menu(context echo.Context, req *dto.Pagination) dto.Response
 	GetById(req dto.GetByIdRequest) (*dto.ProductResponse, error)
-	GetUrl(req dto.ProductRequest) (dto.ProductResponse, error)
+	GetUrl(req dto.ProductRequest) (dto.UrlResponse, error)
 }
 
 type productService struct {

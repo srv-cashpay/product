@@ -8,7 +8,7 @@ import (
 
 func (h *domainHandler) GetUrl(c echo.Context) error {
 	var req dto.ProductRequest
-	var resp dto.ProductResponse
+	var resp dto.UrlResponse
 
 	userid, ok := c.Get("UserId").(string)
 	if !ok {
