@@ -19,6 +19,7 @@ var (
 
 func New() *echo.Echo {
 	e := echo.New()
+	e.GET("/menu", productH.Get)
 
 	product := e.Group("/api/product", middlewares.AuthorizeJWT(JWT))
 	{
