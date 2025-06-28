@@ -10,6 +10,7 @@ type DomainHandler interface {
 	Get(c echo.Context) error
 	GetById(c echo.Context) error
 	Menu(c echo.Context) error
+	GetUrl(c echo.Context) error
 }
 
 type domainHandler struct {

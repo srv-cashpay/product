@@ -27,5 +27,9 @@ func New() *echo.Echo {
 		product.GET("/pagination", productH.Get)
 	}
 
+	webmenu := e.Group("api/web", middlewares.AuthorizeJWT(JWT))
+	{
+		webmenu.GET("/menu", productH.GetUrl)
+	}
 	return e
 }

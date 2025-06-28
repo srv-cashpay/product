@@ -10,6 +10,7 @@ import (
 
 type DomainRepository interface {
 	Get(req *dto.Pagination) (RepositoryResult, int)
+	GetUrl(req dto.ProductRequest) (dto.ProductResponse, error)
 	Menu(req *dto.Pagination) (RepositoryResult, int)
 	GetById(req dto.GetByIdRequest) (*dto.ProductResponse, error)
 }
