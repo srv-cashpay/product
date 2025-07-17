@@ -9,7 +9,7 @@ require (
 	github.com/labstack/echo/v4 v4.12.0
 	github.com/srv-cashpay/merchant v0.0.0-20250621042253-ebb992958600
 	github.com/srv-cashpay/middlewares v0.0.0-20250120090519-4aa5ca3d5cac
-	github.com/srv-cashpay/util v0.0.0-20250421062020-671f81a9b5f4
+	github.com/srv-cashpay/util v0.0.0-20250716052955-e2e8af3139a5
 	gorm.io/driver/postgres v1.5.9
 	gorm.io/gorm v1.25.12
 )
