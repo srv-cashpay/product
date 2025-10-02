@@ -1,6 +1,6 @@
 configs/firebase-service-account.json
-.env
 .env-prod
+.env
 main.go
 main-prod.go
 certs/
