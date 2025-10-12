@@ -1,6 +1,8 @@
 package entity
 
 import (
+	"encoding/json"
+	"fmt"
 	"time"
 
 	category "github.com/srv-cashpay/merchant/entity"
@@ -28,4 +30,26 @@ type Product struct {
 	CreatedAt    time.Time         `json:"created_at"`
 	UpdatedAt    time.Time         `json:"updated_at"`
 	DeletedAt    gorm.DeletedAt    `gorm:"index" json:"deleted_at"`
+}
+
+func (p Product) MarshalJSON() ([]byte, error) {
+	type Alias Product
+	return json.Marshal(&struct {
+		CreatedAt string `json:"created_at"`
+		*Alias
+	}{
+		CreatedAt: FormatDateIndo(p.CreatedAt),
+		Alias:     (*Alias)(&p),
+	})
+}
+
+func FormatDateIndo(t time.Time) string {
+	months := []string{
+		"Januari", "Februari", "Maret", "April", "Mei", "Juni",
+		"Juli", "Agustus", "September", "Oktober", "November", "Desember",
+	}
+	day := t.Day()
+	month := months[t.Month()-1]
+	year := t.Year()
+	return fmt.Sprintf("%d %s %d", day, month, year)
 }

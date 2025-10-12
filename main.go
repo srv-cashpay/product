@@ -14,7 +14,6 @@ func main() {
 	e.Use(middleware.CORS())
 
 	e.Logger.Fatal(e.Start(":2345"))
-
 }
 
 // CORSMiddleware ..
