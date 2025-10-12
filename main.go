@@ -1,23 +1,37 @@
 package main
 
 import (
+	"log"
+	"os"
+
 	"github.com/srv-cashpay/product/routes"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
 
-func main() {
+func mainprod() {
 
 	e := routes.New()
 
 	e.Use(middleware.CORS())
 
-	e.Logger.Fatal(e.Start(":2345"))
+	// Sertifikat Let's Encrypt
+	certFile := os.Getenv("CERT_FILE")
+	keyFile := os.Getenv("KEY_FILE")
+
+	if certFile == "" || keyFile == "" {
+		log.Fatal("CERT_FILE atau KEY_FILE tidak ditemukan di environment")
+	}
+
+	log.Printf("Starting HTTPS server on :2345 (cert: %s)", certFile)
+	if err := e.StartTLS(":2345", certFile, keyFile); err != nil {
+		log.Fatal("StartTLS error:", err)
+	}
 }
 
 // CORSMiddleware ..
-func CORSMiddleware() echo.MiddlewareFunc {
+func CORSMiddlewareProd() echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
 			c.Response().Header().Set("Access-Control-Allow-Origin", "*")
