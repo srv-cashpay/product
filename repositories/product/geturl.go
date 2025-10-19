@@ -13,7 +13,7 @@ func (u *productRepository) GetUrl(req dto.ProductRequest) (dto.UrlResponse, err
 	}
 
 	resp := dto.UrlResponse{
-		MerchantID: "https://cashpay.my.id/menu?merchant_id=" + existingUser.MerchantID,
+		MerchantID: "https://cashpay.my.id/en/menu?merchant_id=" + existingUser.MerchantID,
 	}
 
 	return resp, nil
