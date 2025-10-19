@@ -19,7 +19,7 @@ var (
 
 func New() *echo.Echo {
 	e := echo.New()
-	e.GET("/menu", productH.Menu)
+	e.GET("/api/product/menu", productH.Menu)
 
 	product := e.Group("/api/product", middlewares.AuthorizeJWT(JWT))
 	{
@@ -27,7 +27,7 @@ func New() *echo.Echo {
 		product.GET("/pagination", productH.Get)
 	}
 
-	webmenu := e.Group("api/web", middlewares.AuthorizeJWT(JWT))
+	webmenu := e.Group("api/product/web", middlewares.AuthorizeJWT(JWT))
 	{
 		webmenu.GET("/menu", productH.GetUrl)
 	}

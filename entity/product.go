@@ -12,6 +12,7 @@ import (
 type Product struct {
 	ID           string            `gorm:"primary_key,omitempty" json:"id"`
 	Barcode      string            `gorm:"barcode" json:"barcode"`
+	SKU          uint64            `gorm:"sku" json:"sku"`
 	UserID       string            `gorm:"type:varchar(36);index" json:"user_id"`
 	MerchantID   string            `gorm:"type:varchar(36);index" json:"merchant_id"`
 	MerkID       string            `gorm:"merk_id" json:"merk_id"`
