@@ -7,6 +7,10 @@ import (
 	h_product "github.com/srv-cashpay/product/handlers/product"
 	r_product "github.com/srv-cashpay/product/repositories/product"
 	s_product "github.com/srv-cashpay/product/services/product"
+
+	h_topup "github.com/srv-cashpay/product/handlers/topup/mobilelegend"
+	r_topup "github.com/srv-cashpay/product/repositories/topup/mobilelegend"
+	s_topup "github.com/srv-cashpay/product/services/topup/mobilelegend"
 )
 
 var (
@@ -15,6 +19,10 @@ var (
 	productR = r_product.NewProductRepository(DB)
 	productS = s_product.NewProductService(productR, JWT)
 	productH = h_product.NewProductHandler(productS)
+
+	topupR = r_topup.NewTopUpRepository(DB)
+	topupS = s_topup.NewTopUpService(topupR, JWT)
+	topupH = h_topup.NewMobileLegendHandler(topupS)
 )
 
 func New() *echo.Echo {
@@ -25,6 +33,11 @@ func New() *echo.Echo {
 	{
 		product.GET("/:id", productH.GetById)
 		product.GET("/pagination", productH.Get)
+	}
+
+	topup := e.Group("/api/product")
+	{
+		topup.POST("/topup/mobilelegend", topupH.TopUp)
 	}
 
 	webmenu := e.Group("api/product/web", middlewares.AuthorizeJWT(JWT))
