@@ -18,5 +18,5 @@ func (h *mobilelegendHandler) TopUp(c echo.Context) error {
 		return res.ErrorBuilder(&res.ErrorConstant.BadRequest, err).Send(c)
 	}
 
-	return res.SuccessResponse(resp).Send(c)
+	return c.JSON(200, resp)
 }
