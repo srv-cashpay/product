@@ -47,7 +47,7 @@ func (u *topupRepository) MobileLegend(req dto.MobileLegendRequest) (dto.MobileL
 
 	// Payload FINAL
 	payload := map[string]string{
-		"username":       req.Username,
+		"username":       username,
 		"buyer_sku_code": req.BuyerSkuCode,
 		"customer_no":    customerNo,
 		"ref_id":         req.RefID,
