@@ -17,6 +17,7 @@ import (
 func (u *topupRepository) MobileLegend(req dto.MobileLegendRequest) (dto.MobileLegendResponse, error) {
 
 	vendorURL := os.Getenv("TopUp")
+	username := os.Getenv("USERNAME")
 	apiKey := os.Getenv("PKEY") // ini API KEY, bukan sign langsung
 
 	if apiKey == "" {
@@ -42,7 +43,7 @@ func (u *topupRepository) MobileLegend(req dto.MobileLegendRequest) (dto.MobileL
 	}
 
 	// SIGN = md5(username + apiKey + ref_id)
-	sign := generateMD5(req.Username + apiKey + req.RefID)
+	sign := generateMD5(username + apiKey + req.RefID)
 
 	// Payload FINAL
 	payload := map[string]string{
