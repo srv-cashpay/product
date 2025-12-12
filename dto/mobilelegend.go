@@ -4,7 +4,9 @@ type MobileLegendRequest struct {
 	ID           string `json:"id"`
 	Username     string `json:"username"`
 	BuyerSkuCode string `json:"buyer_sku_code"`
-	CustomerNo   string `json:"customer_no"`
+	UserID       string `json:"user_id"`
+	ZoneID       string `json:"zone_id"`
+	CustomerNo   string `json:"customer_no,omitempty"` // <- tambahkan ini
 	RefID        string `json:"ref_id"`
 	Sign         string `json:"sign"`
 }
